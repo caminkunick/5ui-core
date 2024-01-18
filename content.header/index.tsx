@@ -83,6 +83,7 @@ export const ContentHeader = ({
         <Typography
           variant="h3"
           color={label ? "textPrimary" : "textSecondary"}
+          fontWeight="bold"
         >
           {props.loading ? <Skeleton width={"50%"} /> : label || "No title"}
         </Typography>

@@ -14,7 +14,7 @@ import {
 } from "react";
 import { FirebaseApp } from "firebase/app";
 import { Firestore, getFirestore } from "firebase/firestore";
-import { AlertItemType } from "../alerts";
+import { AlertItemType, AlertsContainer } from "../alerts";
 import { PopupContainer, PopupValue } from "../popup";
 import { grey } from "@mui/material/colors";
 import { FirebaseStorage, getStorage } from "firebase/storage";
@@ -159,14 +159,14 @@ export namespace Core {
 
     Use() {
       return {
-        Auth: (callback: (auth: Auth) => void) => {
-          if (this.auth) callback(this.auth);
+        Auth: (callback: (auth: Auth) => any) => {
+          if (this.auth) return callback(this.auth);
         },
-        DB: (callback: (db: Firestore) => void) => {
-          if (this.db) callback(this.db);
+        DB: (callback: (db: Firestore) => any) => {
+          if (this.db) return callback(this.db);
         },
-        storage: (callback: (storage: FirebaseStorage) => void) => {
-          if (this.app) callback(getStorage(this.app));
+        storage: (callback: (storage: FirebaseStorage) => any) => {
+          if (this.app) return callback(getStorage(this.app));
         },
       };
     }
@@ -235,6 +235,7 @@ export namespace Core {
           <CssBaseline />
           <div {...props} />
           <PopupContainer />
+          <AlertsContainer />
         </ThemeProvider>
       </Context.Provider>
     );

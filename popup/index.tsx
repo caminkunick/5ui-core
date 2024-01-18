@@ -11,7 +11,7 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { InfoRounded } from "@mui/icons-material";
+import { Delete, InfoRounded } from "@mui/icons-material";
 
 const OutlineButton = styled(Button)({});
 OutlineButton.defaultProps = {
@@ -36,6 +36,16 @@ export class PopupValue {
 
   change(value: string): PopupValue {
     return new PopupValue({ ...this, value });
+  }
+
+  static Remove(item: string, onConfirm: () => void): PopupValue {
+    return new PopupValue({
+      title: "Remove",
+      text: `Are you sure you want to remove "${item}"?`,
+      icon: <Delete fontSize="inherit" />,
+      onConfirm: () => onConfirm(),
+      type: "remove",
+    });
   }
 }
 
@@ -70,12 +80,14 @@ export const PopupContainer = styled((props: { className?: string }) => {
       open={open}
       onClose={handleClose}
       TransitionComponent={Slide}
-      TransitionProps={{
-        direction: "down",
-        onExited: () => {
-          dispatch({ type: "popup", value: null });
-        },
-      } as any}
+      TransitionProps={
+        {
+          direction: "down",
+          onExited: () => {
+            dispatch({ type: "popup", value: null });
+          },
+        } as any
+      }
     >
       <Box className="container">
         {state.popup?.icon && <Box className="icon">{state.popup?.icon}</Box>}

@@ -97,7 +97,10 @@ export namespace MainContainerUi {
           },
         },
       });
-    const handleSignOut = () => state.Use().Auth((auth) => signOut(auth));
+    const handleSignOut = () => {
+      props.onClose?.(null, "backdropClick");
+      state.Use().Auth((auth) => signOut(auth));
+    }
     const handleChangeProfile = (files: FileList | null) => {
       if (files && files.length > 0 && state.user) {
         state.Use().storage((storage) => {

@@ -6,11 +6,16 @@ import { Core } from "../core";
 export class AlertItemType {
   key: string = "";
   label: React.ReactNode = "";
-  severity: AlertProps["severity"] = "info";
+  severity: AlertProps["severity"] = "success";
 
   constructor(data?: Partial<AlertItemType>) {
     Object.assign(this, data);
+    if (!this.key) this.key = AlertItemType.genKey();
   }
+
+  static genKey = (): string => {
+    return Math.random().toString(36).substring(2, 9);
+  };
 }
 
 const AlertIitem = ({ value }: { value: AlertItemType }) => {
