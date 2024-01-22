@@ -71,6 +71,7 @@ export const genColumns = () => {
       filterable: false,
       width: 64,
       disableColumnMenu: true,
+      align: "center",
       renderCell: ({ row }) => (
         <>
           {func?.edit && (
