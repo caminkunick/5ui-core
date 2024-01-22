@@ -107,7 +107,7 @@ export const PopupContainer = styled((props: { className?: string }) => {
             onChange={(e) => setValue(e.target.value)}
           />
         ) : (
-          <Typography textAlign="center" color="textSecondary">
+          <Typography variant="caption" textAlign="center" color="textSecondary">
             {state.popup?.text}
           </Typography>
         )}

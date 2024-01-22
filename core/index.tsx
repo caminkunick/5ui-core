@@ -3,6 +3,7 @@ import {
   ThemeOptions,
   ThemeProvider,
   createTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { Auth, User, getAuth, onAuthStateChanged } from "firebase/auth";
 import {
@@ -198,9 +199,11 @@ export namespace Core {
   export const Context = createContext<{
     state: State;
     dispatch: React.Dispatch<StateAction>;
+    mobile: boolean;
   }>({
     state: new State(),
     dispatch: () => {},
+    mobile: false,
   });
 
   // ANCHOR - Hooks
@@ -211,6 +214,7 @@ export namespace Core {
     Partial<Pick<State, "app">>;
   export const Provider = ({ app, ...props }: ProviderProps) => {
     const [state, dispatch] = useReducer(State.reducer, new State());
+    const mobile = useMediaQuery("(max-width: 1024px)");
 
     useEffect(() => {
       const unwatchDarkmode = watchDarkmode((value) =>
@@ -230,7 +234,7 @@ export namespace Core {
     }, [app]);
 
     return (
-      <Context.Provider value={{ state, dispatch }}>
+      <Context.Provider value={{ state, dispatch, mobile }}>
         <ThemeProvider theme={createTheme(defaultTheme(state.dark))}>
           <CssBaseline />
           <div {...props} />
